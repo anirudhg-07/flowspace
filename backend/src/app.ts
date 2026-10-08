@@ -1,0 +1,19 @@
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+
+const app = express();
+
+app.use(helmet());
+app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
+app.use(express.json());
+app.use(morgan('dev'));
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+// Add module routers here later
+
+export default app;
