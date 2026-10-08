@@ -1,122 +1,67 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+    <div className="container" style={{ padding: 'var(--spacing-8) 0' }}>
+      <header style={{ marginBottom: 'var(--spacing-8)' }}>
+        <h1 style={{ marginBottom: 'var(--spacing-2)' }}>Flowspace Design System</h1>
+        <p style={{ color: 'var(--color-text-secondary)' }}>A calm and minimal workspace to turn plans into progress.</p>
+      </header>
+
+      <section style={{ marginBottom: 'var(--spacing-8)' }}>
+        <h2 style={{ marginBottom: 'var(--spacing-4)', fontSize: '1.25rem' }}>Typography & Colors</h2>
+        <div className="card">
+          <h1>Heading 1 (2.5rem)</h1>
+          <h2>Heading 2 (2rem)</h2>
+          <h3>Heading 3 (1.5rem)</h3>
+          <p style={{ marginTop: 'var(--spacing-2)' }}>
+            This is regular body text. It uses the primary text color on the surface background.
+          </p>
+          <p style={{ color: 'var(--color-text-secondary)', marginTop: 'var(--spacing-2)' }}>
+            This is secondary body text for muted descriptions and metadata.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
       </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+      <section style={{ marginBottom: 'var(--spacing-8)' }}>
+        <h2 style={{ marginBottom: 'var(--spacing-4)', fontSize: '1.25rem' }}>Buttons</h2>
+        <div className="card flex gap-4 items-center">
+          <button className="btn btn-primary">Primary Action</button>
+          <button className="btn btn-secondary">Secondary Action</button>
+          <button className="btn btn-ghost">Ghost Action</button>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <section style={{ marginBottom: 'var(--spacing-8)' }}>
+        <h2 style={{ marginBottom: 'var(--spacing-4)', fontSize: '1.25rem' }}>Inputs & Forms</h2>
+        <div className="card" style={{ maxWidth: '400px' }}>
+          <div className="input-group">
+            <label className="input-label">Email Address</label>
+            <input type="email" className="input-field" placeholder="alex@flowspace.com" />
+          </div>
+          <div className="input-group">
+            <label className="input-label">Project Status</label>
+            <select className="input-field">
+              <option>Not Started</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ marginBottom: 'var(--spacing-8)' }}>
+        <h2 style={{ marginBottom: 'var(--spacing-4)', fontSize: '1.25rem' }}>Badges & Status</h2>
+        <div className="card flex gap-4 items-center">
+          <span className="badge badge-success"><span className="status-dot success"></span>Completed</span>
+          <span className="badge badge-warning"><span className="status-dot warning"></span>In Progress</span>
+          <span className="badge badge-danger"><span className="status-dot danger"></span>Overdue</span>
+          <span className="badge badge-neutral"><span className="status-dot neutral"></span>Not Started</span>
+        </div>
+      </section>
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -3,6 +3,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
+import authRoutes from './modules/auth/auth.routes';
+import { errorHandler } from './middleware/error.middleware';
+
 const app = express();
 
 app.use(helmet());
@@ -14,6 +17,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Add module routers here later
+app.use('/api/auth', authRoutes);
+
+app.use(errorHandler);
 
 export default app;
