@@ -110,7 +110,7 @@ Base URL: `/api`
 - **Expo / EAS Instructions**: You can run `npx expo start` to test locally or use `eas build -p android` to generate an APK.
 
 ### 7. Screen Recording
-*(To be attached separately by the submitter)*
+[Video Link](https://drive.google.com/file/d/11i0mLt7R_wupdciwbWcv81_oAnDVJSNH/view?usp=drivesdk)
 
 ---
 
