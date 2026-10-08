@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { colors, spacing, borderRadius } from '../theme/colors';
+import { useFocusEffect } from '@react-navigation/native';
 import api from '../api/client';
 
 export default function ProjectsScreen({ navigation }: any) {
@@ -24,9 +25,11 @@ export default function ProjectsScreen({ navigation }: any) {
     }
   };
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchProjects();
+    }, [])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

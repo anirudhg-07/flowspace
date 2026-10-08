@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { colors, spacing, borderRadius } from '../theme/colors';
+import { useFocusEffect } from '@react-navigation/native';
 import api from '../api/client';
 import { ArrowLeft, MoreHorizontal, Circle, CheckCircle2 } from 'lucide-react-native';
 
@@ -25,9 +26,11 @@ export default function ProjectDetailsScreen({ route, navigation }: any) {
     }
   };
 
-  useEffect(() => {
-    fetchProject();
-  }, [projectId]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchProject();
+    }, [projectId])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

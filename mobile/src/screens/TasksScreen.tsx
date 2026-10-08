@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { colors, spacing, borderRadius } from '../theme/colors';
+import { useFocusEffect } from '@react-navigation/native';
 
 import api from '../api/client';
 import { Circle, CheckCircle2 } from 'lucide-react-native';
@@ -26,9 +27,11 @@ export default function TasksScreen({ navigation }: any) {
     }
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchTasks();
+    }, [])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

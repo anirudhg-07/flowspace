@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { useAuth } from '../context/AuthContext';
+import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, borderRadius } from '../theme/colors';
 import api from '../api/client';
 import { Plus, ChevronRight, Circle, CheckCircle2 } from 'lucide-react-native';
@@ -25,9 +26,11 @@ export default function DashboardScreen({ navigation }: any) {
     }
   };
 
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchDashboard();
+    }, [])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
