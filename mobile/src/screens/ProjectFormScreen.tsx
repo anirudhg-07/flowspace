@@ -52,7 +52,7 @@ export default function ProjectFormScreen({ route, navigation }: any) {
       };
 
       if (isEditing) {
-        await api.patch(`/projects/${projectId}`, payload);
+        await api.put(`/projects/${projectId}`, payload);
       } else {
         await api.post('/projects', payload);
       }

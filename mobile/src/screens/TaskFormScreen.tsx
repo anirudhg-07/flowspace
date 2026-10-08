@@ -73,7 +73,7 @@ export default function TaskFormScreen({ route, navigation }: any) {
       if (dueDate) payload.dueDate = new Date(dueDate).toISOString();
 
       if (isEditing) {
-        await api.patch(`/tasks/${taskId}`, payload);
+        await api.put(`/tasks/${taskId}`, payload);
       } else {
         await api.post('/tasks', payload);
       }
