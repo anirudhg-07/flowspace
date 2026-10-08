@@ -1,13 +1,24 @@
+import { X } from 'lucide-react';
 
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}
 
-export const Modal = ({ isOpen, onClose, title, children }: any) => {
+export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50 }}>
-      <div className="card" style={{ width: '100%', maxWidth: '500px', margin: 'var(--spacing-4)', position: 'relative' }}>
-        <h2 style={{ marginBottom: 'var(--spacing-4)', fontSize: '1.25rem' }}>{title}</h2>
-        <button onClick={onClose} style={{ position: 'absolute', top: 'var(--spacing-5)', right: 'var(--spacing-5)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5rem', lineHeight: 1 }}>&times;</button>
+    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="modal-box">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+          <h2 className="modal-title" style={{ margin: 0 }}>{title}</h2>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', display: 'flex', padding: '4px', borderRadius: '6px' }}>
+            <X size={18} />
+          </button>
+        </div>
         {children}
       </div>
     </div>
