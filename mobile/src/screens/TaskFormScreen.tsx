@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { colors, spacing, borderRadius } from '../theme/colors';
 import api from '../api/client';
 import { ArrowLeft } from 'lucide-react-native';
@@ -11,7 +11,7 @@ export default function TaskFormScreen({ route, navigation }: any) {
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
   
-  const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('MEDIUM');
   const [status, setStatus] = useState('PENDING');
@@ -24,7 +24,7 @@ export default function TaskFormScreen({ route, navigation }: any) {
           const res = await api.get(`/tasks/${taskId}`);
           if (res.data.success) {
             const t = res.data.data;
-            setTitle(t.title);
+            setName(t.name);
             setDescription(t.description || '');
             setPriority(t.priority);
             setStatus(t.status);
@@ -43,14 +43,14 @@ export default function TaskFormScreen({ route, navigation }: any) {
   }, [taskId]);
 
   const handleSave = async () => {
-    if (!title.trim()) {
+    if (!name.trim()) {
       Alert.alert('Error', 'Task name is required');
       return;
     }
     
     setSaving(true);
     try {
-      const payload: any = { title, description, priority, status };
+      const payload: any = { name, description, priority, status };
       if (dueDate) payload.dueDate = new Date(dueDate).toISOString();
       if (projectId) payload.projectId = projectId;
 
@@ -87,7 +87,7 @@ export default function TaskFormScreen({ route, navigation }: any) {
   if (loading) return <View style={styles.center}><ActivityIndicator color={colors.primary} /></View>;
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
           <ArrowLeft color={colors.text} size={24} />
@@ -102,8 +102,8 @@ export default function TaskFormScreen({ route, navigation }: any) {
           style={styles.input} 
           placeholder="What needs to be done?"
           placeholderTextColor={colors.textSecondary}
-          value={title}
-          onChangeText={setTitle}
+          value={name}
+          onChangeText={setName}
         />
 
         <Text style={styles.label}>Description</Text>
@@ -155,7 +155,7 @@ export default function TaskFormScreen({ route, navigation }: any) {
           </TouchableOpacity>
         )}
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

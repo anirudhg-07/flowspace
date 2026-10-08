@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { colors, spacing, borderRadius } from '../theme/colors';
 import { ArrowLeft, Calendar as CalendarIcon } from 'lucide-react-native';
 import api from '../api/client';
@@ -86,7 +86,7 @@ export default function ProjectFormScreen({ route, navigation }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconBtn}>
           <ArrowLeft color={colors.text} size={24} />
@@ -148,7 +148,7 @@ export default function ProjectFormScreen({ route, navigation }: any) {
           </TouchableOpacity>
         )}
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

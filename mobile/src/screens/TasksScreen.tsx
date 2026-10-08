@@ -58,7 +58,7 @@ export default function TasksScreen({ navigation }: any) {
       const tStatus = t.status === 'COMPLETED' ? 'Completed' : (t.status === 'IN_PROGRESS' ? 'In Progress' : 'Pending');
       if (tStatus !== filter) return false;
     }
-    if (search && !t.title.toLowerCase().includes(search.toLowerCase())) return false;
+    if (search && !t.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
 

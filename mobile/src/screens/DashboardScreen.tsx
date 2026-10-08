@@ -78,49 +78,49 @@ export default function DashboardScreen({ navigation }: any) {
       </View>
 
       {/* 9. WORKSPACE METRICS */}
-      {data?.metrics && (
+      {data?.stats && (
         <View style={styles.section}>
           <View style={styles.metricsGrid}>
             <View style={styles.metricCard}>
-              <Text style={styles.metricValue}>{data.metrics.totalProjects}</Text>
+              <Text style={styles.metricValue}>{data.stats.totalProjects}</Text>
               <Text style={styles.metricLabel}>Projects</Text>
             </View>
             <View style={styles.metricCard}>
-              <Text style={styles.metricValue}>{data.metrics.totalTasks}</Text>
+              <Text style={styles.metricValue}>{data.stats.totalTasks}</Text>
               <Text style={styles.metricLabel}>Tasks</Text>
             </View>
             <View style={styles.metricCard}>
-              <Text style={styles.metricValue}>{data.metrics.completedTasks}</Text>
+              <Text style={styles.metricValue}>{data.stats.completedTasks}</Text>
               <Text style={styles.metricLabel}>Completed</Text>
             </View>
             <View style={styles.metricCard}>
-              <Text style={styles.metricValue}>{data.metrics.pendingTasks}</Text>
+              <Text style={styles.metricValue}>{data.stats.pendingTasks}</Text>
               <Text style={styles.metricLabel}>Pending</Text>
             </View>
           </View>
           <View style={[styles.metricCard, { marginTop: spacing.sm, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
-            <Text style={styles.metricValue}>{data.metrics.inProgressProjects}</Text>
+            <Text style={styles.metricValue}>{data.stats.projectsInProgress}</Text>
             <Text style={styles.metricLabel}>Projects In Progress</Text>
           </View>
         </View>
       )}
 
       {/* 10. PROJECT PROGRESS */}
-      {data?.metrics && (
+      {data?.projectProgress && (
         <View style={styles.section}>
           <View style={styles.progressCard}>
             <Text style={styles.progressTitle}>Project Progress</Text>
             <View style={styles.progressLayout}>
               <View style={styles.progressCircleContainer}>
                 <View style={styles.progressCirclePlaceholder}>
-                  <Text style={styles.progressPercentage}>{data.metrics.totalTasks > 0 ? Math.round((data.metrics.completedTasks / data.metrics.totalTasks) * 100) : 0}%</Text>
+                  <Text style={styles.progressPercentage}>{data.projectProgress.percentage}%</Text>
                 </View>
                 <Text style={styles.progressSub}>Overall completion</Text>
               </View>
               <View style={styles.progressStats}>
-                <View style={styles.progressStatRow}><Text style={styles.progressStatLabel}>Completed</Text><Text style={styles.progressStatValue}>{data.metrics.completedTasks}</Text></View>
-                <View style={styles.progressStatRow}><Text style={styles.progressStatLabel}>In Progress</Text><Text style={styles.progressStatValue}>{data.metrics.totalTasks - data.metrics.completedTasks - data.metrics.pendingTasks}</Text></View>
-                <View style={styles.progressStatRow}><Text style={styles.progressStatLabel}>Pending</Text><Text style={styles.progressStatValue}>{data.metrics.pendingTasks}</Text></View>
+                <View style={styles.progressStatRow}><Text style={styles.progressStatLabel}>Completed</Text><Text style={styles.progressStatValue}>{data.projectProgress.completed}</Text></View>
+                <View style={styles.progressStatRow}><Text style={styles.progressStatLabel}>In Progress</Text><Text style={styles.progressStatValue}>{data.projectProgress.inProgress}</Text></View>
+                <View style={styles.progressStatRow}><Text style={styles.progressStatLabel}>Pending</Text><Text style={styles.progressStatValue}>{data.projectProgress.pending}</Text></View>
               </View>
             </View>
           </View>
@@ -133,7 +133,7 @@ export default function DashboardScreen({ navigation }: any) {
           <Text style={styles.sectionTitle}>Upcoming Tasks</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Tasks')}><Text style={styles.viewAll}>View all</Text></TouchableOpacity>
         </View>
-        {data?.tasks?.length > 0 ? data.tasks.slice(0, 4).map((task: any) => (
+        {data?.upcomingTasks?.length > 0 ? data.upcomingTasks.slice(0, 4).map((task: any) => (
           <TouchableOpacity key={task.id} style={styles.taskRow} onPress={() => navigation.navigate('TaskForm', { taskId: task.id, projectId: task.project_id })}>
             {task.status === 'COMPLETED' ? <CheckCircle2 size={20} color={colors.success} style={styles.taskIcon} /> : <Circle size={20} color={colors.border} style={styles.taskIcon} />}
             <View style={styles.taskContent}>
@@ -166,11 +166,11 @@ export default function DashboardScreen({ navigation }: any) {
               <Text style={styles.projectCardTitle} numberOfLines={1}>{project.name}</Text>
               <Text style={styles.projectCardDesc} numberOfLines={2}>{project.description || 'No description'}</Text>
               <View style={styles.projectCardProgress}>
-                <View style={styles.projectCardProgressBar}><View style={[styles.projectCardProgressFill, { width: `${project._count?.tasks > 0 ? ((project.tasks || []).filter((t: any) => t.status === 'COMPLETED').length / project._count.tasks) * 100 : 0}%` }]} /></View>
-                <Text style={styles.projectCardProgressText}>{project._count?.tasks > 0 ? Math.round(((project.tasks || []).filter((t: any) => t.status === 'COMPLETED').length / project._count.tasks) * 100) : 0}%</Text>
+                <View style={styles.projectCardProgressBar}><View style={[styles.projectCardProgressFill, { width: `${project.progress || 0}%` }]} /></View>
+                <Text style={styles.projectCardProgressText}>{project.progress || 0}%</Text>
               </View>
               <View style={styles.projectCardFooter}>
-                <Text style={styles.projectCardFooterText}>{project._count?.tasks || 0} tasks</Text>
+                <Text style={styles.projectCardFooterText}>{project.taskCount || 0} tasks</Text>
                 <Text style={styles.projectCardFooterText}>{project.end_date ? new Date(project.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''}</Text>
               </View>
             </TouchableOpacity>
