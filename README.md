@@ -83,5 +83,20 @@ The `vercel.json` file handles routing, serving the static web app on the main d
 
 For a full step-by-step guide on how to deploy this project, please see the [DEPLOYMENT.md](./DEPLOYMENT.md) guide.
 
+## 🎓 Submission Details (Full Stack Task)
+
+This repository fulfills all requirements for the Full Stack Task assessment. Below is the quick-reference checklist to easily navigate the project:
+
+1. **Public GitHub Repository Link**: [Flowspace Repository](https://github.com/anirudhg-07/flowspace)
+2. **Database Schema or ER Diagram**: See [ER_DIAGRAM.md](./ER_DIAGRAM.md) (Features a visual Mermaid.js Entity-Relationship graph)
+3. **API Documentation**: See [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) (Complete RESTful endpoints table)
+4. **README File**: You are reading it!
+5. **Deployment URL**: 
+   - **Web App & Backend**: [https://flowspace-six-omega.vercel.app](https://flowspace-six-omega.vercel.app)
+6. **Mobile App**:
+   - **Source Code**: Found in the `/mobile` directory.
+   - **Expo / EAS Instructions**: You can run `npx expo start` or follow the instructions in the section below to generate a standalone Android `.apk`.
+7. **Screen Recording**: *(To be attached separately by the submitter)*
+
 ## 📄 License
 This project is open-source and available under the MIT License.
