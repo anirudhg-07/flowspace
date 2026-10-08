@@ -2,8 +2,8 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
-// Use the public tunnel URL to bypass your router's device isolation
-const BASE_URL = 'https://tourist-trivia-performing-trout.trycloudflare.com/api';
+// Use the production Vercel URL
+const BASE_URL = 'https://flowspace-six-omega.vercel.app/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
