@@ -13,6 +13,8 @@ import DashboardScreen from '../screens/DashboardScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
 import TasksScreen from '../screens/TasksScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import ProjectDetailsScreen from '../screens/ProjectDetailsScreen';
+import TaskFormScreen from '../screens/TaskFormScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,7 +74,11 @@ export const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
         {user ? (
-          <Stack.Screen name="App" component={MainTabs} />
+          <>
+            <Stack.Screen name="App" component={MainTabs} />
+            <Stack.Screen name="ProjectDetails" component={ProjectDetailsScreen as any} />
+            <Stack.Screen name="TaskForm" component={TaskFormScreen as any} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
