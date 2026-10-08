@@ -163,8 +163,8 @@ export default function DashboardScreen({ navigation }: any) {
               <Text style={styles.projectCardTitle} numberOfLines={1}>{project.name}</Text>
               <Text style={styles.projectCardDesc} numberOfLines={2}>{project.description || 'No description'}</Text>
               <View style={styles.projectCardProgress}>
-                <View style={styles.projectCardProgressBar}><View style={[styles.projectCardProgressFill, { width: `${project._count?.tasks > 0 ? (project.tasks?.filter((t: any) => t.status === 'COMPLETED').length / project._count.tasks) * 100 : 0}%` }]} /></View>
-                <Text style={styles.projectCardProgressText}>{project._count?.tasks > 0 ? Math.round((project.tasks?.filter((t: any) => t.status === 'COMPLETED').length / project._count.tasks) * 100) : 0}%</Text>
+                <View style={styles.projectCardProgressBar}><View style={[styles.projectCardProgressFill, { width: `${project._count?.tasks > 0 ? ((project.tasks || []).filter((t: any) => t.status === 'COMPLETED').length / project._count.tasks) * 100 : 0}%` }]} /></View>
+                <Text style={styles.projectCardProgressText}>{project._count?.tasks > 0 ? Math.round(((project.tasks || []).filter((t: any) => t.status === 'COMPLETED').length / project._count.tasks) * 100) : 0}%</Text>
               </View>
               <View style={styles.projectCardFooter}>
                 <Text style={styles.projectCardFooterText}>{project._count?.tasks || 0} tasks</Text>
