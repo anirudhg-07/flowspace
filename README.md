@@ -99,8 +99,6 @@ Base URL: `/api`
 | `PUT`  | `/:id` | Update an existing task | `{ name, description, priority, status, dueDate }` |
 | `DELETE` | `/:id` | Delete a task | *(Requires Auth)* |
 
-### 4. README File
-You are reading it!
 
 ### 5. Deployment URL
 - **Web App & Backend**: [https://flowspace-six-omega.vercel.app](https://flowspace-six-omega.vercel.app)
