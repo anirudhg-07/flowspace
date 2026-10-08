@@ -27,8 +27,9 @@ export const getProjects = async (req: AuthRequest, res: Response, next: NextFun
 
 export const getProjectById = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
+    const id = req.params.id as string;
     const project = await prisma.project.findFirst({
-      where: { id: req.params.id, user_id: req.user!.userId }
+      where: { id, user_id: req.user!.userId }
     });
     if (!project) return res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'Project not found' } });
     res.json({ success: true, data: project });
@@ -54,7 +55,7 @@ export const createProject = async (req: AuthRequest, res: Response, next: NextF
 
 export const updateProject = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const project = await prisma.project.findFirst({ where: { id, user_id: req.user!.userId } });
     if (!project) return res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'Project not found' } });
 
@@ -73,7 +74,7 @@ export const updateProject = async (req: AuthRequest, res: Response, next: NextF
 
 export const deleteProject = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const project = await prisma.project.findFirst({ where: { id, user_id: req.user!.userId } });
     if (!project) return res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'Project not found' } });
 
