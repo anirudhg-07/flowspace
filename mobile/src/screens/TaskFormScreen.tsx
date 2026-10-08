@@ -16,6 +16,9 @@ export default function TaskFormScreen({ route, navigation }: any) {
   const [priority, setPriority] = useState('MEDIUM');
   const [status, setStatus] = useState('PENDING');
   const [dueDate, setDueDate] = useState(''); // Simple string for now
+  
+  const [selectedProjectId, setSelectedProjectId] = useState(projectId || '');
+  const [projects, setProjects] = useState<any[]>([]);
 
   useEffect(() => {
     if (isEditing) {
@@ -28,7 +31,8 @@ export default function TaskFormScreen({ route, navigation }: any) {
             setDescription(t.description || '');
             setPriority(t.priority);
             setStatus(t.status);
-            setDueDate(t.dueDate ? new Date(t.dueDate).toISOString().split('T')[0] : '');
+            setDueDate(t.due_date ? new Date(t.due_date).toISOString().split('T')[0] : '');
+            setSelectedProjectId(t.project_id || '');
           }
         } catch (e) {
           console.log('Error fetching task', e);
@@ -40,6 +44,17 @@ export default function TaskFormScreen({ route, navigation }: any) {
       };
       fetchTask();
     }
+    
+    // Fetch projects for the selector
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get('/projects');
+        if (res.data.success) setProjects(res.data.data);
+      } catch (e) {
+        console.log('Error fetching projects', e);
+      }
+    };
+    fetchProjects();
   }, [taskId]);
 
   const handleSave = async () => {
@@ -47,12 +62,15 @@ export default function TaskFormScreen({ route, navigation }: any) {
       Alert.alert('Error', 'Task name is required');
       return;
     }
+    if (!selectedProjectId) {
+      Alert.alert('Error', 'Please select a project for this task');
+      return;
+    }
     
     setSaving(true);
     try {
-      const payload: any = { name, description, priority, status };
+      const payload: any = { name, description, priority, status, projectId: selectedProjectId };
       if (dueDate) payload.dueDate = new Date(dueDate).toISOString();
-      if (projectId) payload.projectId = projectId;
 
       if (isEditing) {
         await api.patch(`/tasks/${taskId}`, payload);
@@ -105,6 +123,20 @@ export default function TaskFormScreen({ route, navigation }: any) {
           value={name}
           onChangeText={setName}
         />
+
+        <Text style={styles.label}>Project</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.projectScroll} style={{ marginBottom: spacing.lg }}>
+          {projects.map(p => (
+            <TouchableOpacity 
+              key={p.id} 
+              style={[styles.projectChip, selectedProjectId === p.id && styles.projectChipActive]}
+              onPress={() => setSelectedProjectId(p.id)}
+            >
+              <Text style={[styles.projectChipText, selectedProjectId === p.id && styles.projectChipTextActive]}>{p.name}</Text>
+            </TouchableOpacity>
+          ))}
+          {projects.length === 0 && <Text style={{color: colors.textSecondary, alignSelf: 'center'}}>No projects available</Text>}
+        </ScrollView>
 
         <Text style={styles.label}>Description</Text>
         <TextInput 
@@ -171,6 +203,12 @@ const styles = StyleSheet.create({
   label: { fontSize: 14, fontWeight: '500', color: colors.text, marginBottom: spacing.xs },
   input: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: borderRadius.md, padding: spacing.md, fontSize: 16, color: colors.text, marginBottom: spacing.lg },
   textArea: { minHeight: 100 },
+  
+  projectScroll: { gap: spacing.sm },
+  projectChip: { paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderRadius: borderRadius.full, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
+  projectChipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
+  projectChipText: { fontSize: 14, color: colors.textSecondary, fontWeight: '500' },
+  projectChipTextActive: { color: '#fff' },
   
   segmentedControl: { flexDirection: 'row', backgroundColor: colors.surfaceAlt, borderRadius: borderRadius.md, padding: 4, marginBottom: spacing.lg },
   segment: { flex: 1, paddingVertical: spacing.sm, alignItems: 'center', borderRadius: borderRadius.sm },
