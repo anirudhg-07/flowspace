@@ -93,7 +93,7 @@ export default function ProjectsScreen({ navigation }: any) {
             const statusLabel = project.status.replace('_', ' ');
 
             return (
-              <TouchableOpacity key={project.id} style={styles.projectCard}>
+              <TouchableOpacity key={project.id} style={styles.projectCard} onPress={() => navigation.navigate('ProjectDetails', { projectId: project.id })}>
                 <View style={styles.cardHeader}>
                   <Text style={styles.cardTitle}>{project.name}</Text>
                   <Text style={[styles.statusBadge, project.status === 'COMPLETED' && { color: colors.success }, project.status === 'IN_PROGRESS' && { color: colors.primary }]}>
@@ -111,7 +111,7 @@ export default function ProjectsScreen({ navigation }: any) {
 
                 <View style={styles.cardFooter}>
                   <Text style={styles.cardFooterText}>{totalTasks} tasks</Text>
-                  <Text style={styles.cardFooterText}>{project.dueDate ? `Due ${new Date(project.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}` : ''}</Text>
+                  <Text style={styles.cardFooterText}>{project.end_date ? `Due ${new Date(project.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}` : ''}</Text>
                 </View>
               </TouchableOpacity>
             );

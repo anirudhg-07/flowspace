@@ -102,8 +102,8 @@ export default function ProjectDetailsScreen({ route, navigation }: any) {
             <Text style={styles.progressText}>{Math.round(progress)}%</Text>
           </View>
           
-          {project.dueDate && (
-            <Text style={styles.dateText}>Due {new Date(project.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</Text>
+          {project.end_date && (
+            <Text style={styles.dateText}>Due {new Date(project.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</Text>
           )}
         </View>
 
@@ -125,10 +125,10 @@ export default function ProjectDetailsScreen({ route, navigation }: any) {
                     {task.status === 'COMPLETED' ? <CheckCircle2 size={24} color={colors.success} /> : <Circle size={24} color={colors.border} />}
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.taskContent} onPress={() => navigation.navigate('TaskForm', { taskId: task.id })}>
-                    <Text style={[styles.taskTitle, task.status === 'COMPLETED' && styles.taskTitleCompleted]}>{task.title}</Text>
+                    <Text style={[styles.taskTitle, task.status === 'COMPLETED' && styles.taskTitleCompleted]}>{task.name}</Text>
                     <View style={styles.taskMeta}>
                       <Text style={[styles.taskPriority, task.priority === 'HIGH' && { color: colors.danger }, task.priority === 'MEDIUM' && { color: colors.warning }]}>{task.priority} · {task.status.replace('_', ' ')}</Text>
-                      <Text style={styles.taskDate}>{task.dueDate ? `Due ${new Date(task.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}` : ''}</Text>
+                      <Text style={styles.taskDate}>{task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}` : ''}</Text>
                     </View>
                   </TouchableOpacity>
                 </View>

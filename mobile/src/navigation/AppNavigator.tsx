@@ -15,6 +15,7 @@ import TasksScreen from '../screens/TasksScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ProjectDetailsScreen from '../screens/ProjectDetailsScreen';
 import TaskFormScreen from '../screens/TaskFormScreen';
+import ProjectFormScreen from '../screens/ProjectFormScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,7 @@ export const AppNavigator = () => {
             <Stack.Screen name="App" component={MainTabs} />
             <Stack.Screen name="ProjectDetails" component={ProjectDetailsScreen as any} />
             <Stack.Screen name="TaskForm" component={TaskFormScreen as any} />
+            <Stack.Screen name="ProjectForm" component={ProjectFormScreen as any} />
           </>
         ) : (
           <>

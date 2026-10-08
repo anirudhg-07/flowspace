@@ -66,11 +66,11 @@ export default function DashboardScreen({ navigation }: any) {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Quick actions</Text>
         <View style={styles.quickActions}>
-          <TouchableOpacity style={styles.quickActionButton}>
+          <TouchableOpacity style={styles.quickActionButton} onPress={() => navigation.navigate('ProjectForm')}>
             <Plus size={18} color={colors.text} />
             <Text style={styles.quickActionText}>Project</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.quickActionButton, styles.quickActionPrimary]}>
+          <TouchableOpacity style={[styles.quickActionButton, styles.quickActionPrimary]} onPress={() => navigation.navigate('TaskForm')}>
             <Plus size={18} color="#fff" />
             <Text style={[styles.quickActionText, { color: '#fff' }]}>Task</Text>
           </TouchableOpacity>
@@ -134,22 +134,22 @@ export default function DashboardScreen({ navigation }: any) {
           <TouchableOpacity onPress={() => navigation.navigate('Tasks')}><Text style={styles.viewAll}>View all</Text></TouchableOpacity>
         </View>
         {data?.tasks?.length > 0 ? data.tasks.slice(0, 4).map((task: any) => (
-          <View key={task.id} style={styles.taskRow}>
+          <TouchableOpacity key={task.id} style={styles.taskRow} onPress={() => navigation.navigate('TaskForm', { taskId: task.id, projectId: task.project_id })}>
             {task.status === 'COMPLETED' ? <CheckCircle2 size={20} color={colors.success} style={styles.taskIcon} /> : <Circle size={20} color={colors.border} style={styles.taskIcon} />}
             <View style={styles.taskContent}>
-              <Text style={[styles.taskTitle, task.status === 'COMPLETED' && styles.taskTitleCompleted]}>{task.title}</Text>
+              <Text style={[styles.taskTitle, task.status === 'COMPLETED' && styles.taskTitleCompleted]}>{task.name}</Text>
               <Text style={styles.taskProject}>{task.project?.name || 'No Project'}</Text>
             </View>
             <View style={styles.taskMeta}>
               <Text style={[styles.taskPriority, task.priority === 'HIGH' && { color: colors.danger }, task.priority === 'MEDIUM' && { color: colors.warning }]}>{task.priority}</Text>
-              <Text style={styles.taskDate}>{task.dueDate ? new Date(task.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'No due date'}</Text>
+              <Text style={styles.taskDate}>{task.due_date ? new Date(task.due_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'No due date'}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )) : (
           <View style={styles.emptyState}>
             <Text style={styles.emptyStateTitle}>No tasks yet</Text>
             <Text style={styles.emptyStateDesc}>Add a task to start moving your project forward.</Text>
-            <TouchableOpacity style={styles.emptyStateBtn}><Text style={styles.emptyStateBtnText}>+ Add Task</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.emptyStateBtn} onPress={() => navigation.navigate('TaskForm')}><Text style={styles.emptyStateBtnText}>+ Add Task</Text></TouchableOpacity>
           </View>
         )}
       </View>
@@ -162,7 +162,7 @@ export default function DashboardScreen({ navigation }: any) {
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.md }}>
           {data?.recentProjects?.length > 0 ? data.recentProjects.map((project: any) => (
-            <TouchableOpacity key={project.id} style={styles.projectCardHoriz}>
+            <TouchableOpacity key={project.id} style={styles.projectCardHoriz} onPress={() => navigation.navigate('ProjectDetails', { projectId: project.id })}>
               <Text style={styles.projectCardTitle} numberOfLines={1}>{project.name}</Text>
               <Text style={styles.projectCardDesc} numberOfLines={2}>{project.description || 'No description'}</Text>
               <View style={styles.projectCardProgress}>
@@ -171,7 +171,7 @@ export default function DashboardScreen({ navigation }: any) {
               </View>
               <View style={styles.projectCardFooter}>
                 <Text style={styles.projectCardFooterText}>{project._count?.tasks || 0} tasks</Text>
-                <Text style={styles.projectCardFooterText}>{project.dueDate ? new Date(project.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''}</Text>
+                <Text style={styles.projectCardFooterText}>{project.end_date ? new Date(project.end_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''}</Text>
               </View>
             </TouchableOpacity>
           )) : (
@@ -187,17 +187,17 @@ export default function DashboardScreen({ navigation }: any) {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Upcoming Deadlines</Text>
         {data?.upcomingDeadlines?.length > 0 ? data.upcomingDeadlines.map((task: any) => (
-          <View key={task.id} style={styles.deadlineRow}>
+          <TouchableOpacity key={task.id} style={styles.deadlineRow} onPress={() => navigation.navigate('TaskForm', { taskId: task.id, projectId: task.project_id })}>
             <View style={styles.deadlineDateBox}>
-              <Text style={styles.deadlineDateDay}>{new Date(task.dueDate).getDate()}</Text>
-              <Text style={styles.deadlineDateMonth}>{new Date(task.dueDate).toLocaleDateString(undefined, { month: 'short' }).toUpperCase()}</Text>
+              <Text style={styles.deadlineDateDay}>{task.due_date ? new Date(task.due_date).getDate() : '-'}</Text>
+              <Text style={styles.deadlineDateMonth}>{task.due_date ? new Date(task.due_date).toLocaleDateString(undefined, { month: 'short' }).toUpperCase() : 'NO DATE'}</Text>
             </View>
             <View style={styles.deadlineContent}>
-              <Text style={styles.taskTitle}>{task.title}</Text>
+              <Text style={styles.taskTitle}>{task.name}</Text>
               <Text style={styles.taskProject}>{task.project?.name || 'No Project'}</Text>
               <Text style={[styles.taskPriority, task.priority === 'HIGH' && { color: colors.danger }, task.priority === 'MEDIUM' && { color: colors.warning }]}>{task.priority} PRIORITY</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )) : (
           <View style={[styles.emptyState, { borderWidth: 0, backgroundColor: 'transparent' }]}>
             <Text style={styles.emptyStateTitle}>You're clear</Text>

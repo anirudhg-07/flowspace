@@ -107,10 +107,10 @@ export default function TasksScreen({ navigation }: any) {
                 <TouchableOpacity onPress={() => toggleTaskStatus(task)} style={styles.checkboxArea}>
                   {task.status === 'COMPLETED' ? <CheckCircle2 size={24} color={colors.success} /> : <Circle size={24} color={colors.border} />}
                 </TouchableOpacity>
-                <View style={styles.taskContent}>
-                  <Text style={[styles.taskTitle, task.status === 'COMPLETED' && styles.taskTitleCompleted]}>{task.title}</Text>
+                <TouchableOpacity style={styles.taskContent} onPress={() => navigation.navigate('TaskForm', { taskId: task.id, projectId: task.project_id })}>
+                  <Text style={[styles.taskTitle, task.status === 'COMPLETED' && styles.taskTitleCompleted]}>{task.name}</Text>
                   <Text style={styles.taskProject}>{task.project?.name || 'No Project'}</Text>
-                </View>
+                </TouchableOpacity>
               </View>
 
               <View style={styles.taskCardBottom}>
@@ -122,7 +122,7 @@ export default function TasksScreen({ navigation }: any) {
                     {task.status.replace('_', ' ')}
                   </Text>
                 </View>
-                <Text style={styles.taskDate}>{task.dueDate ? `Due ${new Date(task.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}` : ''}</Text>
+                <Text style={styles.taskDate}>{task.due_date ? `Due ${new Date(task.due_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}` : ''}</Text>
               </View>
             </View>
           )) : (
