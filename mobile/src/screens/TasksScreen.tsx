@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { colors, spacing, borderRadius } from '../theme/colors';
+
 import api from '../api/client';
 import { Circle, CheckCircle2 } from 'lucide-react-native';
 
@@ -38,7 +39,7 @@ export default function TasksScreen({ navigation }: any) {
     // Optimistic update
     const newStatus = task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED';
     setTasks(current => current.map(t => t.id === task.id ? { ...t, status: newStatus } : t));
-    
+
     try {
       await api.patch(`/tasks/${task.id}`, { status: newStatus });
     } catch (e) {
@@ -66,9 +67,9 @@ export default function TasksScreen({ navigation }: any) {
       </View>
 
       <View style={styles.searchContainer}>
-        <TextInput 
-          style={styles.searchInput} 
-          placeholder="Search tasks..." 
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search tasks..."
           placeholderTextColor={colors.textSecondary}
           value={search}
           onChangeText={setSearch}
@@ -78,8 +79,8 @@ export default function TasksScreen({ navigation }: any) {
       <View style={styles.filterContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
           {filters.map(f => (
-            <TouchableOpacity 
-              key={f} 
+            <TouchableOpacity
+              key={f}
               style={[styles.filterChip, filter === f && styles.filterChipActive]}
               onPress={() => setFilter(f)}
             >
@@ -92,7 +93,7 @@ export default function TasksScreen({ navigation }: any) {
       {loading && !refreshing ? (
         <View style={styles.center}><ActivityIndicator color={colors.primary} /></View>
       ) : (
-        <ScrollView 
+        <ScrollView
           style={styles.list}
           contentContainerStyle={{ paddingBottom: 40 }}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
@@ -108,7 +109,7 @@ export default function TasksScreen({ navigation }: any) {
                   <Text style={styles.taskProject}>{task.project?.name || 'No Project'}</Text>
                 </View>
               </View>
-              
+
               <View style={styles.taskCardBottom}>
                 <View style={styles.taskBadges}>
                   <Text style={[styles.badge, task.priority === 'HIGH' && { color: colors.danger, backgroundColor: colors.dangerLight }, task.priority === 'MEDIUM' && { color: colors.warning }]}>
@@ -139,10 +140,10 @@ const styles = StyleSheet.create({
   header: { padding: spacing.lg, paddingTop: spacing.xl + spacing.md },
   title: { fontSize: 28, fontWeight: '700', color: colors.text, marginBottom: 4 },
   subtitle: { fontSize: 15, color: colors.textSecondary },
-  
+
   searchContainer: { paddingHorizontal: spacing.lg, marginBottom: spacing.md },
   searchInput: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: borderRadius.md, padding: spacing.md, fontSize: 16, color: colors.text },
-  
+
   filterContainer: { marginBottom: spacing.md },
   filterScroll: { paddingHorizontal: spacing.lg, gap: spacing.sm },
   filterChip: { paddingHorizontal: spacing.md, paddingVertical: 8, borderRadius: borderRadius.full, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   filterTextActive: { color: colors.surface },
 
   list: { paddingHorizontal: spacing.lg },
-  
+
   taskCard: { backgroundColor: colors.surface, padding: spacing.lg, borderRadius: borderRadius.md, borderWidth: 1, borderColor: colors.border, marginBottom: spacing.sm },
   taskCardTop: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: spacing.md },
   checkboxArea: { paddingRight: spacing.md, paddingTop: 2 },
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   taskTitle: { fontSize: 16, fontWeight: '500', color: colors.text, marginBottom: 4 },
   taskTitleCompleted: { color: colors.textSecondary, textDecorationLine: 'line-through' },
   taskProject: { fontSize: 14, color: colors.textSecondary },
-  
+
   taskCardBottom: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 24 + spacing.md },
   taskBadges: { flexDirection: 'row', gap: spacing.sm },
   badge: { fontSize: 11, fontWeight: '600', color: colors.textSecondary, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 4, overflow: 'hidden' },

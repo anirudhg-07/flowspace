@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
 // Use the public tunnel URL to bypass your router's device isolation
-const BASE_URL = 'https://03a1178e831612.lhr.life/api';
+const BASE_URL = 'https://tourist-trivia-performing-trout.trycloudflare.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
