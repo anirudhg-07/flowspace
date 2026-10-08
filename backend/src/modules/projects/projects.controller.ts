@@ -29,7 +29,8 @@ export const getProjectById = async (req: AuthRequest, res: Response, next: Next
   try {
     const id = req.params.id as string;
     const project = await prisma.project.findFirst({
-      where: { id, user_id: req.user!.userId }
+      where: { id, user_id: req.user!.userId },
+      include: { tasks: true }
     });
     if (!project) return res.status(404).json({ success: false, error: { code: 'NOT_FOUND', message: 'Project not found' } });
     res.json({ success: true, data: project });

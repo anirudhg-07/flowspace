@@ -17,7 +17,7 @@ export default function TasksScreen({ navigation }: any) {
     try {
       const res = await api.get('/tasks');
       if (res.data.success) {
-        setTasks(res.data.data.tasks);
+        setTasks(res.data.data || []);
       }
     } catch (e) {
       console.log('Error fetching tasks', e);

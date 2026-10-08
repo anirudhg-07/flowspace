@@ -23,7 +23,7 @@ export default function TaskFormScreen({ route, navigation }: any) {
         try {
           const res = await api.get(`/tasks/${taskId}`);
           if (res.data.success) {
-            const t = res.data.data.task;
+            const t = res.data.data;
             setTitle(t.title);
             setDescription(t.description || '');
             setPriority(t.priority);

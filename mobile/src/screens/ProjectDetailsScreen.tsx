@@ -16,7 +16,7 @@ export default function ProjectDetailsScreen({ route, navigation }: any) {
     try {
       const res = await api.get(`/projects/${projectId}`);
       if (res.data.success) {
-        setProject(res.data.data.project);
+        setProject(res.data.data);
       }
     } catch (e) {
       console.log('Error fetching project', e);
