@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { Projects } from './pages/Projects';
+import { Tasks } from './pages/Tasks';
 import './App.css';
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/tasks" element={<Dashboard />} />
+              <Route path="/tasks" element={<Tasks />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
