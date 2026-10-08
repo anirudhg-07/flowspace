@@ -2,6 +2,8 @@
 
 Flowspace is a beautiful, full-stack project and task management system. It features a fully responsive React Web Application, a cross-platform Mobile Application (iOS/Android) built with Expo, and a robust Express.js backend powered by Prisma and PostgreSQL.
 
+Live: https://flowspace-six-omega.vercel.app
+
 ## 🎓 Submission Details (Full Stack Task)
 
 This repository fulfills all requirements for the Full Stack Task assessment. Below is the quick-reference checklist to easily navigate the project:
